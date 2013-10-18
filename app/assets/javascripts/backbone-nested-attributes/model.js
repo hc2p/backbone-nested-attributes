@@ -28,6 +28,9 @@
       value = value instanceof Backbone.Model ? value : new ModelClass(value)
 
       configureEventBubbling(model, value, relation)
+
+      value.parentModel = model
+      
       attributes[key] = value
     }
   }
