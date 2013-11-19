@@ -9,7 +9,7 @@
         if (relation.type == 'one') {
           setHasOneNestedAttributeFor(model, relation, attributes)
         } else {
-          setNestedAttributeFor(model, relation, attributes)
+          setNestedAttributeFor(model, relation, attributes, options)
         }
       })
     }
@@ -35,7 +35,7 @@
     }
   }
 
-  function setNestedAttributeFor(model, relation, attributes) {
+  function setNestedAttributeFor(model, relation, attributes, options) {
     var key           = relation.key,
         value         = attributes[key],
         deletedValue  = attributes['deleted_' + key],
@@ -47,7 +47,7 @@
     configureEventBubbling(model, nested, relation)
 
     if (value) {
-      nested.set(value)
+      nested.set(value, options)
     }
 
     nested.parentModel = model
