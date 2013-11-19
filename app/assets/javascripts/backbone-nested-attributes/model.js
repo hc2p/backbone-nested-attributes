@@ -2,7 +2,14 @@
   var BackboneModelPrototype = Backbone.Model.prototype
 
   function setNestedAttributes(model, key, value, options) {
-    var attributes = attributesFor(key, value, options)
+    var attributes;
+    if (_.isObject(key) || key == null) {
+      attributes = key
+      options = value
+    } else {
+      attributes = {}
+      attributes[key] = value
+    }
 
     if (attributes) {
       _(model.relations).each(function (relation) {
