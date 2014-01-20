@@ -14,7 +14,7 @@
     if (attributes) {
       _(model.relations).each(function (relation) {
         if (relation.type == 'one') {
-          setHasOneNestedAttributeFor(model, relation, attributes)
+          setHasOneNestedAttributeFor(model, relation, attributes, options)
         } else {
           setNestedAttributeFor(model, relation, attributes, options)
         }
@@ -26,13 +26,13 @@
     return attributes
   }
 
-  function setHasOneNestedAttributeFor(model, relation, attributes) {
+  function setHasOneNestedAttributeFor(model, relation, attributes, options) {
     var key           = relation.key,
         value         = attributes[key],
         ModelClass    = _(relation).result('relatedModel')
 
     if (value) {
-      value = value instanceof Backbone.Model ? value : new ModelClass(value)
+      value = value instanceof Backbone.Model ? value : new ModelClass(value, options)
 
       configureEventBubbling(model, value, relation)
 
