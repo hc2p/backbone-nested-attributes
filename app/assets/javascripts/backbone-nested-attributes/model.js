@@ -1,4 +1,10 @@
-(function(Backbone, _) {
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['backbone', 'underscore'], factory);
+  } else {
+    factory(window.Backbone, window._);
+  }
+}(function (Backbone, _) {
   var BackboneModelPrototype = Backbone.Model.prototype
 
   function setNestedAttributes(model, key, value, options) {
@@ -37,7 +43,7 @@
       configureEventBubbling(model, value, relation)
 
       value.parentModel = model
-      
+
       attributes[key] = value
     }
   }
@@ -218,4 +224,4 @@
        return this.collection.parentModel
     },
   })
-})(Backbone, _)
+}));
