@@ -204,6 +204,9 @@
   Backbone.NestedAttributesModel = Backbone.Model.extend({
     set: function (key, value, options) {
       var attributes = setNestedAttributes(this, key, value, options)
+      if (options == null && _.isObject(value)) {
+        options = value;
+      }
       return BackboneModelPrototype.set.call(this, attributes, options)
     },
 
