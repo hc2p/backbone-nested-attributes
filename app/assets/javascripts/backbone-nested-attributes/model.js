@@ -185,28 +185,21 @@
     }
   }
 
-  function attributesFor(key, value, options) {
-    var attributes
-
-    // Duplicate backbone's behavior to allow separate key/value parameters,
-    // instead of a single 'attributes' object.
-    if (_.isObject(key) || key == null) {
-      attributes = key
-      options = value
-    } else {
-      attributes = {}
-      attributes[key] = value
-    }
-
-    return attributes
-  }
-
   Backbone.NestedAttributesModel = Backbone.Model.extend({
     set: function (key, value, options) {
-      var attributes = setNestedAttributes(this, key, value, options)
-      if (options == null && _.isObject(value)) {
+      var attributes;
+      if (key == null) return this;
+
+      // Handle both `"key", value` and `{key: value}` -style arguments.
+      if (typeof key === 'object') {
+        attributes = key;
         options = value;
+      } else {
+        (attributes = {})[key] = value;
       }
+
+      var attributes = setNestedAttributes(this, attributes, options)
+
       return BackboneModelPrototype.set.call(this, attributes, options)
     },
 
